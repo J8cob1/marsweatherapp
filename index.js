@@ -32,10 +32,11 @@ app.get('/charthistory', (req, res) => {
     res.send("Chart History");
 });
 
+// Also want to get the basic page layout setup. We don’t want repeated code for the header and footer. The header and footer should be mobile friendly
 // Need an error route
 // Logging
 
-// Start listening
+// Start server
 app.listen(port, () => {
     console.log("Server running at port " + port);
 });

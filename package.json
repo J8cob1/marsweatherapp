@@ -1,29 +1,15 @@
 {
-  "name": "marsweatherapp",
-  "version": "1.0.0",
-  "description": "A full stack web application for displaying the Weather and/or current conditions of Mars",
-  "main": "index.js",
-  "dependencies": {
-    "express": "^4.17.1"
-  },
-  "devDependencies": {},
+  "name": "marsapp",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/J8cob1/marsweatherapp.git"
-  },
-  "keywords": [
-    "mars",
-    "weather",
-    "node",
-    "react"
-  ],
-  "author": "Jacob Crisan",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/J8cob1/marsweatherapp/issues"
-  },
-  "homepage": "https://github.com/J8cob1/marsweatherapp#readme"
+  "dependencies": {
+    "next": "9.4.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  }
 }

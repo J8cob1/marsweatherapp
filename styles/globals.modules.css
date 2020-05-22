@@ -1,0 +1,15 @@
+body {
+  height: 100%;
+  background-color: orangered;
+  color: white;
+}
+
+nav footer {
+  /*background-color: orangered;
+  color: white;*/
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  /* Unfinished */
+}
