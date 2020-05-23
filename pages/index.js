@@ -1,10 +1,23 @@
 import Head from 'next/head'
+import Base from '../components/base'
 
 export default function Home() {
+  // Reminder: change favicon
   return (
-    <div className="container">
+    <>
       <Head>
-        <title>Create Next App</title>
+        <title>Current Weather - Mars Weather App</title>
+        <link rel="icon" href="favicon.ico" />
+      </Head>
+      <Base>
+      <p>page contents</p>
+      </Base>
+    </>
+  )
+  /*return (
+    <div className="container">
+      <Head
+        <title>Current Weather - Mars Weather App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -39,10 +52,10 @@ export default function Home() {
           <a
             href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
+          >display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;s site to a public URL with Vercel.
             </p>
           </a>
         </div>
@@ -205,5 +218,5 @@ export default function Home() {
         }
       `}</style>
     </div>
-  )
+  )*/
 }

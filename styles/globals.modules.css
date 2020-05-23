@@ -1,15 +1,21 @@
-body {
+/* https://stackoverflow.com/questions/38428322/react-component-full-screen-with-height-100 */
+html, body, #__next {
   height: 100%;
+}
+body {
+  background-color: orangered;
+  color: white;
+  margin: 0;
+}
+.color-primary {
   background-color: orangered;
   color: white;
 }
-
-nav footer {
-  /*background-color: orangered;
-  color: white;*/
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  /* Unfinished */
+.color-light {
+  background-color: lightgray;
+  color: black;
+}
+.color-dark {
+  background-color: darkred;
+  color: white;
 }
