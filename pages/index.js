@@ -2,16 +2,51 @@ import Head from 'next/head'
 import Base from '../components/base'
 
 export default function Home() {
+
   // Reminder: change favicon
   return (
     <>
       <Head>
         <title>Current Weather - Mars Weather App</title>
-        <link rel="icon" href="favicon.ico" />
+        <link rel="icon" href="iconfinder_mars_37873.png" />
       </Head>
       <Base>
-      <p>page contents</p>
+        <div>
+          <hr></hr>
+          <h1>Sol 446 - April 20 2020</h1>  
+          <hr></hr>
+        </div>
+        Sol 446 - April 20 2020
+        <div>
+          <Box>
+            Temperature
+          </Box>
+          <Box>
+            Wind
+          </Box>
+          <Box>
+            Pressure
+          </Box>
+          <Box>
+            Season
+          </Box>
+        </div>
+        <div>
+          <img src="sdf"></img>
+          <img src="sdf"></img>
+          <img src="sdf"></img>
+        </div>
       </Base>
+
+      <style jsx global>{`
+        div {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-around;
+
+        }
+      `}</style>
     </>
   )
   /*return (
