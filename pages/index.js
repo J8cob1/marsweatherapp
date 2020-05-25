@@ -1,54 +1,86 @@
 import Head from 'next/head'
 import Base from '../components/base'
+import Box from '../components/box'
+import { render } from 'react-dom'
 
-export default function Home() {
+export default class Index extends React.Component {
+  // Constructor
+  constructor(props) {
+    // Call parent constructor
+    super(props)
 
-  // Reminder: change favicon
-  return (
-    <>
-      <Head>
-        <title>Current Weather - Mars Weather App</title>
-        <link rel="icon" href="iconfinder_mars_37873.png" />
-      </Head>
-      <Base>
-        <div>
-          <hr></hr>
-          <h1>Sol 446 - April 20 2020</h1>  
-          <hr></hr>
-        </div>
-        Sol 446 - April 20 2020
-        <div>
-          <Box>
-            Temperature
-          </Box>
-          <Box>
-            Wind
-          </Box>
-          <Box>
-            Pressure
-          </Box>
-          <Box>
-            Season
-          </Box>
-        </div>
-        <div>
-          <img src="sdf"></img>
-          <img src="sdf"></img>
-          <img src="sdf"></img>
-        </div>
-      </Base>
+    // Internal State
+    this.state = {
+      date: "-",
+      sol: "-",
+      high: "-",
+      low:"-",
+      wind:"-",
+      pressure: "-",
+      season: "-",
+      date: "-"
+    }
 
-      <style jsx global>{`
-        div {
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: space-around;
+    // https://stackoverflow.com/questions/4870328/read-environment-variables-in-node-js
+    let apiKey = process.env.NASA_API_KEY
+    fetch("https://api.nasa.gov/insight_weather/?api_key=" +  + "&feedtype=json&ver=1.0");
+  }
 
-        }
-      `}</style>
-    </>
-  )
+  // Loads the UI
+  render() {
+    // Reminder: change favicon
+    return (
+      <>
+        <Head>
+          <title>Current Weather - Mars Weather App</title>
+          <link rel="icon" href="iconfinder_mars_37873.png" />
+        </Head>
+        <Base>
+          <div className="flex-row">
+            <hr></hr>
+            <h1>Sol {this.sol} - {this.date}</h1>  
+            <hr></hr>
+          </div>
+          <div className="flex-row">
+            <Box>
+              <p>High: {this.high}</p>
+              <p>Low: {this.low}</p>
+              <p>Switch</p>
+            </Box>
+            <Box>
+              {this.wind}
+            </Box>
+            <Box>
+              {this.pressure}
+            </Box>
+            <Box>
+              {this.season}
+            </Box>
+          </div>
+          <div className="flex-row">
+            <img src="sdf"></img>
+            <img src="sdf"></img>
+            <img src="sdf"></img>
+          </div>
+        </Base>
+
+        <style jsx global>{`
+          .flex-col {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: space-around;
+          }
+          .flex-row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+          }
+        `}</style>
+      </>
+    );
+  }
   /*return (
     <div className="container">
       <Head

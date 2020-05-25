@@ -1,3 +1,5 @@
 Lecture Slides
 https://nextjs.org/learn/basics/* tutorials--both their code and the knowledge form them (I didn't go through all of them, but I worked off some of the code I saw there)
 The code that came with npm init next-js app
+
+// Eh: https://stackoverflow.com/questions/3148415/how-to-make-a-vertical-line-in-html
