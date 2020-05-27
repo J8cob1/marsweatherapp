@@ -1,18 +1,18 @@
 // File Box.js
 
 // A function components, since I don't know if I need anything else
-export default function Box({ childeren }) {
+export default function Box({ children }) {
     return (
-        <div className="color-light">
-            {childeren}
+        <div className="color-dark">
+            {children}
             <style jsx>{`
                 div {
-                    border: 10px solid white;
-                    min-width: 150px; /**/
-                    min-height: 150px;
-                    max-width: 200px;
+                    min-width: 300px; /**/
+                    min-height: 300px;
+                    text-align: center;
+                    margin: 10px;
                 }
-            `}</style>   
+            `}</style>
         </div>
     )
 }
