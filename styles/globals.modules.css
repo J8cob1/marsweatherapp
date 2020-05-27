@@ -9,13 +9,16 @@ body {
 }
 .color-primary {
   background-color: orangered;
+  border-color: orangered; /**/
   color: white;
 }
 .color-light {
-  background-color: lightgray;
+  background-color: lightgrey;
+  border-color: lightgrey; /**/
   color: black;
 }
 .color-dark {
   background-color: darkred;
+  border-color: darkred; /**/
   color: white;
 }

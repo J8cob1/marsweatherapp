@@ -1,19 +1,135 @@
 import Head from 'next/head'
 import Base from '../components/base'
+import Box from '../components/box'
+import { render } from 'react-dom'
+import moment from 'moment-timezone'
+import celciusToFehrenheit from '../shared_functions'
 
-export default function Home() {
-  // Reminder: change favicon
-  return (
-    <>
-      <Head>
-        <title>Current Weather - Mars Weather App</title>
-        <link rel="icon" href="favicon.ico" />
-      </Head>
-      <Base>
-      <p>page contents</p>
-      </Base>
-    </>
-  )
+// Gets Mars Weather Data From NASA
+export async function getStaticProps() {
+  // https://stackoverflow.com/questions/4870328/read-environment-variables-in-node-js
+  let apiKey = process.env.NASA_API_KEY
+
+  // Get Weather Data
+  let weatherQuery = await fetch("https://api.nasa.gov/insight_weather/?api_key=" + apiKey + "&feedtype=json&ver=1.0");
+  weatherQuery = await weatherQuery.json();
+  let sol = weatherQuery.sol_keys[weatherQuery.sol_keys.length-1]
+  let latestWeatherObj = weatherQuery[weatherQuery.sol_keys[weatherQuery.sol_keys.length-1]]; /**/
+  
+  // Get picture URLs
+  let curiosityRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${sol}&api_key=${apiKey}&camera=NAVCAM`);
+  let opportunityRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=${sol}&api_key=${apiKey}&camera=NAVCAM`);
+  let spiritRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/spirit/photos?sol=${sol}&api_key=${apiKey}&camera=NAVCAM`);
+  curiosityRoverPhotoQuery = await curiosityRoverPhotoQuery.json();
+  opportunityRoverPhotoQuery = await opportunityRoverPhotoQuery.json();
+  spiritRoverPhotoQuery = await spiritRoverPhotoQuery.json();
+
+  // Get Astronomy Picture of the day
+  //let APOTDQuery = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`);
+  //APOTDQuery = await APOTDQuery.json();
+
+  /*.space-background {
+  background-img: url(${apic_pic});
+  }*/
+
+  return {
+    props: {
+      date: moment(latestWeatherObj.Last_UTC).tz('America/Los_Angeles').format('ll'), // Might want to get current timezone
+      "sol": sol,
+      high: celciusToFehrenheit(latestWeatherObj.AT.mx),
+      low: celciusToFehrenheit(latestWeatherObj.AT.mn),
+      wind: latestWeatherObj.WD.most_common.compass_point,
+      pressure: latestWeatherObj.PRE.av,
+      season: latestWeatherObj.Season,
+      curiositypic: curiosityRoverPhotoQuery.photos.length > 0 ? curiosityRoverPhotoQuery.photos[0].img_src : "",
+      opportunitypic: opportunityRoverPhotoQuery.photos.length > 0 ? opportunityRoverPhotoQuery.photos[0].img_src : "",
+      spiritpic: spiritRoverPhotoQuery.photos.length > 0 ? spiritRoverPhotoQuery.photos[0].img_src : "",
+      //apic_pic: APOTDQuery.hdurl,
+      //apic_copyright: APOTDQuery.hasOwnProperty("copyright") ? APOTDQuery.copyright : "",
+    }
+  };
+}
+
+export default class Index extends React.Component {
+  // Loads the UI
+  render() {
+    // Reminder: change favicon give propper credit for favicon
+    // Remember accessibility overhall
+    return (
+      <>
+        <Head>
+          <title>Current Weather - Mars Weather App</title>
+          <link rel="icon" href="iconfinder_mars_37873.png" />
+        </Head>
+        <Base>
+          <div className="flex-row">
+            <div className="title">
+                <h1>{this.props.date}</h1>
+                <p>Sol {this.props.sol}</p> 
+            </div>
+          </div>
+          <div className="flex-row">
+            <Box>
+              <h2>Temperature</h2>
+              <p>High: {this.props.high}</p>
+              <p>Low: {this.props.low}</p>
+              <p>Temperature Switch - Dropdown</p>
+            </Box>
+            <Box>
+              <h2>Wind</h2>
+              <p>Most Common Wind Direction: {this.props.wind}</p>
+              <p>Average Horizontal Wind Speed: {this.props.wind}</p>
+            </Box>
+            <Box>
+              <h2>Pressure</h2>
+              <p>{this.props.pressure}</p>
+              <p>(pascals)</p>
+            </Box>
+            <Box>
+              <h2>Season</h2>
+              {this.props.season}
+            </Box>
+          </div>
+          <div className="flex-row">
+            <img src={this.props.curiositypic}></img>
+            <img src={this.props.opportunitypic}></img>
+            <img src={this.props.spiritpic}></img>
+          </div>
+        </Base>
+
+        <style jsx global>{`
+          .flex-col {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: space-around;
+          }
+          .flex-row {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around;
+          }
+          img {
+            margin-top: 70px;
+            margin-left: 10px;
+            margin-right: 10px;
+            width: 400px;
+          }
+          .title {
+            text-align: center;
+          }
+          .title h1 {
+            margin-bottom: 5px;
+          }
+          .title p {
+            font-size: x-large;
+            margin-top: 0px;
+          }
+        `}</style>
+      </>
+    );
+  }
   /*return (
     <div className="container">
       <Head

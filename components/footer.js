@@ -1,10 +1,12 @@
 // A function components, since I don't know if I need anything else
 // Might have had some help with this
-export default function Footer() {
+export default function Footer(props) {
     return (
     <>
     <footer>
-        <p>Powered by Node, Next.js and React. I hope you enjoy!</p>
+        <p>Powered by Node, Next.js and React. 
+           I hope you enjoy! Favicon courtesy of <a href="https://www.iconfinder.com/iconka">Denis Sazhin</a> from IconFinder. 
+        </p>
     </footer>
 
     <style jsx>{`

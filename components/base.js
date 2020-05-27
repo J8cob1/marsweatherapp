@@ -2,14 +2,15 @@
 // Will contain header and footer
 import Header from './header'
 import Footer from './footer'
+import { Children } from 'react'
 
 // A function components, since I don't know if I need anything else
-export default function Base({ bodyHTML }) {
+export default function Base({ children }) {
     return (
         <div className="flex">
         <Header></Header>
-        <div className="color-light flex-grow">{bodyHTML}
-          <p>sdfsd</p>
+        <div className="color-light flex-grow">
+            {children}
         </div>
         <Footer></Footer>
 
