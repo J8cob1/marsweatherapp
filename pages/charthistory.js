@@ -70,7 +70,7 @@ export default function ChartHistory() {
     return (
         <>
         <Head>
-          <title>Current Weather - Mars Weather App</title>
+          <title>Weather History - Mars Weather App</title>
           <link rel="icon" href="iconfinder_mars_37873.png" />
         </Head>
         <Base>

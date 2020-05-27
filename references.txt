@@ -39,3 +39,4 @@ https://github.com/jerairrest/react-chartjs-2
 https://www.chartjs.org/docs/latest/ (documentation)
 https://pusher.com/tutorials/realtime-data-visualization-nextjs (led me to charts.js and react-chartsjs-2)
 https://vercel.com/docs (documentation, specifically used environment variables)
+https://www.nasa.gov/image-feature/jpl/pia22232/insight-s-landing-site-elysium-planitia

@@ -32,9 +32,11 @@ export async function getStaticProps() {
   background-img: url(${apic_pic});
   }*/
 
+  console.log(latestWeatherObj)
+
   return {
     props: {
-      date: moment(latestWeatherObj.Last_UTC).tz('America/Los_Angeles').format('ll'), // Might want to get current timezone
+      date: latestWeatherObj ? "" : moment(latestWeatherObj.Last_UTC).tz('America/Los_Angeles').format('ll'), // Might want to get current timezone
       "sol": sol,
       high: celciusToFehrenheit(latestWeatherObj.AT.mx),
       low: celciusToFehrenheit(latestWeatherObj.AT.mn),
