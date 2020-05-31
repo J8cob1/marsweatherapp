@@ -34,4 +34,13 @@ https://mars.nasa.gov/insight/weather/
 https://devconnected.com/how-to-undo-last-git-commit/
 https://nextjs.org/docs/basic-features/environment-variables
 https://stackoverflow.com/questions/11580961/sending-command-line-arguments-to-npm-script and https://stackoverflow.com/questions/5327495/list-all-environment-variables-from-the-command-line/40967338#40967338 and https://stackoverflow.com/questions/51491101/how-to-print-echo-windows-environment-variables-such-as-path-without-interpretin and https://superuser.com/questions/341192/how-can-i-display-the-contents-of-an-environment-variable-from-the-command-promp and https://stackoverflow.com/questions/37140799/passing-environment-variables-in-npm-scripts didn't really help
+<<<<<<< HEAD
+https://stackoverflow.com/questions/5277161/why-is-min-height-not-working and https://stackoverflow.com/questions/1709442/make-divs-height-expand-with-its-content might have helped with div sizing 
+https://github.com/jerairrest/react-chartjs-2
+https://www.chartjs.org/docs/latest/ (documentation)
+https://pusher.com/tutorials/realtime-data-visualization-nextjs (led me to charts.js and react-chartsjs-2)
+https://vercel.com/docs (documentation, specifically used environment variables)
 https://www.nasa.gov/image-feature/jpl/pia22232/insight-s-landing-site-elysium-planitia
+=======
+https://www.nasa.gov/image-feature/jpl/pia22232/insight-s-landing-site-elysium-planitia
+>>>>>>> 7c8c29939dca9629813a8f439fdb50dd77a3f277
