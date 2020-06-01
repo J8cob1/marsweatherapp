@@ -8,46 +8,42 @@ import celciusToFehrenheit from '../shared_functions'
 // Gets Mars Weather Data From NASA
 export async function getStaticProps() {
   // https://stackoverflow.com/questions/4870328/read-environment-variables-in-node-js
-  let apiKey = process.env.NASA_API_KEY
+  let apiKey = process.env.NASA_API_KEY;
 
   // Get Weather Data
   let weatherQuery = await fetch("https://api.nasa.gov/insight_weather/?api_key=" + apiKey + "&feedtype=json&ver=1.0");
   weatherQuery = await weatherQuery.json();
-  let sol = weatherQuery.sol_keys[weatherQuery.sol_keys.length-1]
+  let sol = weatherQuery.sol_keys[weatherQuery.sol_keys.length-1];
   let latestWeatherObj = weatherQuery[weatherQuery.sol_keys[weatherQuery.sol_keys.length-1]]; /**/
   
   // Get picture URLs
-  let curiosityRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${sol}&api_key=${apiKey}&camera=NAVCAM`);
-  let opportunityRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=${sol}&api_key=${apiKey}&camera=NAVCAM`);
-  let spiritRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/spirit/photos?sol=${sol}&api_key=${apiKey}&camera=NAVCAM`);
+  let curiosityRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${sol}&api_key=${apiKey}`);
+  let opportunityRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=${sol}&api_key=${apiKey}`);
+  let spiritRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/spirit/photos?sol=${sol}&api_key=${apiKey}`);
   curiosityRoverPhotoQuery = await curiosityRoverPhotoQuery.json();
   opportunityRoverPhotoQuery = await opportunityRoverPhotoQuery.json();
   spiritRoverPhotoQuery = await spiritRoverPhotoQuery.json();
 
-  // Get Astronomy Picture of the day
-  //let APOTDQuery = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`);
-  //APOTDQuery = await APOTDQuery.json();
-
-  /*.space-background {
-  background-img: url(${apic_pic});
-  }*/
+  // Get Astronomy Picture of the day. We will use it as a background image
+  let APOTDQuery = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`);
+  APOTDQuery = await APOTDQuery.json();
 
   console.log(latestWeatherObj)
 
   return {
     props: {
-      date: latestWeatherObj ? "" : moment(latestWeatherObj.Last_UTC).tz('America/Los_Angeles').format('ll'), // Might want to get current timezone
+      date: latestWeatherObj.Last_UTC ? moment(latestWeatherObj.Last_UTC).tz('America/Los_Angeles').format('ll') : "Unknown Date", // Might want to get current timezone
       "sol": sol,
-      high: celciusToFehrenheit(latestWeatherObj.AT.mx),
-      low: celciusToFehrenheit(latestWeatherObj.AT.mn),
-      wind: latestWeatherObj.WD.most_common.compass_point,
-      pressure: latestWeatherObj.PRE.av,
-      season: latestWeatherObj.Season,
+      high: latestWeatherObj.AT ? celciusToFehrenheit(latestWeatherObj.AT.mx) : "Unknown",
+      low: latestWeatherObj.AT ? celciusToFehrenheit(latestWeatherObj.AT.mn) : "Unknown",
+      wind: latestWeatherObj.WD.most_common ? latestWeatherObj.WD.most_common.compass_point : "Unknown",
+      pressure: latestWeatherObj.PRE ? latestWeatherObj.PRE.av : "Unknown",
+      season: latestWeatherObj.Season ? latestWeatherObj.Season : "Unknown",
       curiositypic: curiosityRoverPhotoQuery.photos.length > 0 ? curiosityRoverPhotoQuery.photos[0].img_src : "",
       opportunitypic: opportunityRoverPhotoQuery.photos.length > 0 ? opportunityRoverPhotoQuery.photos[0].img_src : "",
       spiritpic: spiritRoverPhotoQuery.photos.length > 0 ? spiritRoverPhotoQuery.photos[0].img_src : "",
-      //apic_pic: APOTDQuery.hdurl,
-      //apic_copyright: APOTDQuery.hasOwnProperty("copyright") ? APOTDQuery.copyright : "",
+      apic_pic: APOTDQuery.hdurl,
+      apic_copyright: APOTDQuery.hasOwnProperty("copyright") ? APOTDQuery.copyright : "",
     }
   };
 }
@@ -63,12 +59,10 @@ export default class Index extends React.Component {
           <title>Current Weather - Mars Weather App</title>
           <link rel="icon" href="iconfinder_mars_37873.png" />
         </Head>
-        <Base>
-          <div className="flex-row">
-            <div className="title">
-                <h1>{this.props.date}</h1>
-                <p>Sol {this.props.sol}</p> 
-            </div>
+        <Base pictureURL={this.props.apic_pic} copyright={this.props.apic_copyright}>
+          <div className="title color-dark">
+              <h1>{this.props.date}</h1>
+              <p>Sol {this.props.sol}</p> 
           </div>
           <div className="flex-row">
             <Box>
@@ -93,9 +87,9 @@ export default class Index extends React.Component {
             </Box>
           </div>
           <div className="flex-row">
-            <img src={this.props.curiositypic}></img>
-            <img src={this.props.opportunitypic}></img>
-            <img src={this.props.spiritpic}></img>
+            <img alt="Picture From NASA's Curiosity Rover" src={this.props.curiositypic}></img>
+            <img alt="Picture From NASA's Opportunity Rover" src={this.props.opportunitypic}></img>
+            <img alt="Picture From NASA's Spirit Rover" src={this.props.spiritpic}></img>
           </div>
         </Base>
 
@@ -119,7 +113,14 @@ export default class Index extends React.Component {
             width: 400px;
           }
           .title {
+            width: 250px;
             text-align: center;
+            padding: 1px;
+            margin-top: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+            border-radius: 10px;
           }
           .title h1 {
             margin-bottom: 5px;

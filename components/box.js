@@ -11,6 +11,7 @@ export default function Box({ children }) {
                     min-height: 300px;
                     text-align: center;
                     margin: 10px;
+                    border-radius: 10px;
                 }
             `}</style>
         </div>
