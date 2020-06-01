@@ -40,9 +40,13 @@ https://www.chartjs.org/docs/latest/ (documentation)
 https://pusher.com/tutorials/realtime-data-visualization-nextjs (led me to charts.js and react-chartsjs-2)
 https://vercel.com/docs (documentation, specifically used environment variables)
 https://www.nasa.gov/image-feature/jpl/pia22232/insight-s-landing-site-elysium-planitia
+<<<<<<< HEAD
 https://reactjs.org/docs/render-props.html and some help
 https://css-tricks.com/snippets/css/transparent-background-images/ - told me that I couldn't make background images transparent
 https://stackoverflow.com/questions/5135019/css-opacity-only-to-background-color-not-the-text-on-it
 https://stackoverflow.com/questions/10422949/css-background-opacity
 https://stackoverflow.com/questions/15438774/give-space-above-and-below-a-div maybe
 https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
+=======
+https://css-tricks.com/snippets/css/a-guide-to-flexbox/ - maybe
+>>>>>>> Made some UI changes in the Chart History page, and a global color change
