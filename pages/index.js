@@ -4,7 +4,6 @@ import Box from '../components/box'
 import { render } from 'react-dom'
 import moment from 'moment-timezone'
 import celciusToFehrenheit from '../shared_functions'
-import capitalizeFirstLetter from '../shared_functions'
 
 // Gets Mars Weather Data From NASA
 export async function getStaticProps() {

@@ -11,7 +11,7 @@ export default function Footer(props) {
   <footer className="color-primary">
     <p>
       Powered by Node, Next.js and React. I hope you enjoy!
-      Favicon courtesy of <a href="https://www.iconfinder.com/brian_ondari">Brian Ondari</a> from IconFinder, liscensed under the <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a> license
+      Favicon courtesy of <a href="https://www.iconfinder.com/brian_ondari">Brian Ondari</a> from IconFinder, licensed under the <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a> license
       {footerMessage}
     </p>
   </footer>
