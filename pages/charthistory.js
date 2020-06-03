@@ -71,7 +71,7 @@ export default function ChartHistory() {
         <>
         <Head>
           <title>Weather History - Mars Weather App</title>
-          <link rel="icon" href="iconfinder_mars_37873.png" />
+          <link rel="icon" href="iconfinder_planet_univearse_telestial_space_mars_1039574.ico" />
         </Head>
         <Base>
           <h1>Weather History</h1>

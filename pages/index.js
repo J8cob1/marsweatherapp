@@ -4,6 +4,7 @@ import Box from '../components/box'
 import { render } from 'react-dom'
 import moment from 'moment-timezone'
 import celciusToFehrenheit from '../shared_functions'
+import capitalizeFirstLetter from '../shared_functions'
 
 // Gets Mars Weather Data From NASA
 export async function getStaticProps() {
@@ -15,7 +16,7 @@ export async function getStaticProps() {
   weatherQuery = await weatherQuery.json();
   let sol = weatherQuery.sol_keys[weatherQuery.sol_keys.length-1];
   let latestWeatherObj = weatherQuery[weatherQuery.sol_keys[weatherQuery.sol_keys.length-1]]; /**/
-  
+
   // Get picture URLs
   let curiosityRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${sol}&api_key=${apiKey}`);
   let opportunityRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=${sol}&api_key=${apiKey}`);
@@ -28,68 +29,139 @@ export async function getStaticProps() {
   let APOTDQuery = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`);
   APOTDQuery = await APOTDQuery.json();
 
-  console.log(latestWeatherObj)
-
   return {
     props: {
       date: latestWeatherObj.Last_UTC ? moment(latestWeatherObj.Last_UTC).tz('America/Los_Angeles').format('ll') : "Unknown Date", // Might want to get current timezone
       "sol": sol,
       high: latestWeatherObj.AT ? celciusToFehrenheit(latestWeatherObj.AT.mx) : "Unknown",
       low: latestWeatherObj.AT ? celciusToFehrenheit(latestWeatherObj.AT.mn) : "Unknown",
-      wind: latestWeatherObj.WD.most_common ? latestWeatherObj.WD.most_common.compass_point : "Unknown",
+      winddirection: latestWeatherObj.WD.most_common ? latestWeatherObj.WD.most_common.compass_point : "Unknown",
+      windspeed: latestWeatherObj.HWS ? latestWeatherObj.HWS.av : "Unknown",
       pressure: latestWeatherObj.PRE ? latestWeatherObj.PRE.av : "Unknown",
-      season: latestWeatherObj.Season ? latestWeatherObj.Season : "Unknown",
-      curiositypic: curiosityRoverPhotoQuery.photos.length > 0 ? curiosityRoverPhotoQuery.photos[0].img_src : "",
-      opportunitypic: opportunityRoverPhotoQuery.photos.length > 0 ? opportunityRoverPhotoQuery.photos[0].img_src : "",
-      spiritpic: spiritRoverPhotoQuery.photos.length > 0 ? spiritRoverPhotoQuery.photos[0].img_src : "",
-      apic_pic: APOTDQuery.hdurl,
-      apic_copyright: APOTDQuery.hasOwnProperty("copyright") ? APOTDQuery.copyright : "",
+      season: latestWeatherObj.Season ? String(latestWeatherObj.Season) : "Unknown",
+      curiositypic1: curiosityRoverPhotoQuery.photos.length > 0 ? curiosityRoverPhotoQuery.photos[0].img_src : "",
+      opportunitypic1: opportunityRoverPhotoQuery.photos.length > 0 ? opportunityRoverPhotoQuery.photos[0].img_src : "",
+      spiritpic1: spiritRoverPhotoQuery.photos.length > 0 ? spiritRoverPhotoQuery.photos[0].img_src : "",
+      curiositypic2: curiosityRoverPhotoQuery.photos.length > 1 ? curiosityRoverPhotoQuery.photos[1].img_src : "",
+      opportunitypic2: opportunityRoverPhotoQuery.photos.length > 1 ? opportunityRoverPhotoQuery.photos[1].img_src : "",
+      spiritpic2: spiritRoverPhotoQuery.photos.length > 1 ? spiritRoverPhotoQuery.photos[1].img_src : "",
+      apic_pic: APOTDQuery.hdurl ? APOTDQuery.hdurl : (APOTDQuery.url ? APOTDQuery.url : ""),
+      apic_copyright: APOTDQuery.hasOwnProperty("copyright") && (APOTDQuery.hdurl || APOTDQuery.url) ? APOTDQuery.copyright : "",
     }
   };
 }
 
 export default class Index extends React.Component {
+  getSeasonIcon(season) {
+    if (season === "summer") {
+      return "iconfinder_sun_4677537.svg";
+    }
+    else if (season === "fall" || season === "autumn") { // Not sure if it's "fall" or "autumn"... hopefully its one of them at least!
+      return "iconfinder_01_autumn-fall-leaves_2660284.svg";
+    }
+    else if (season === "winter") {
+      return "iconfinder_72_snowflake_christmas_holiday_winter_season_4008369.svg";
+    }
+    else if (season === "spring") {
+      return "iconfinder_warm_1076727.svg";
+    }
+    else {
+      return "iconfinder_164_QuestionMark_183285.svg";
+    }
+  }
+
+  getWindDirectionTransform(windDirection) {
+    // https://en.wikipedia.org/wiki/Points_of_the_compass
+    switch (windDirection) {
+      case ("N"):
+        return 0;
+      case ("NNE"):
+        return 22.5;
+      case ("NE"):
+        return 45;
+      case ("ENE"):
+        return 67.5;
+      case ("E"):
+        return 90;
+      case ("ESE"):
+        return 112.5;
+      case ("SE"):
+        return 135;
+      case ("SSE"):
+        return 157.5;
+      case ("S"):
+        return 180;
+      case ("SSW"):
+        return 202.5;
+      case ("SW"):
+        return 225;
+      case ("WSW"):
+        return 247.5;
+      case ("W"):
+        return 270;
+      case ("WNW"):
+        return 292.5;
+      case ("NW"):
+        return 315;
+      case ("NNW"):
+        return 337.5;
+    }
+  }
+
   // Loads the UI
   render() {
-    // Reminder: change favicon give propper credit for favicon
+    // Shared Variables
+    let minBoxHeight = 400;
+    let minBoxWidth = 300;
+
     // Remember accessibility overhall
     return (
       <>
         <Head>
           <title>Current Weather - Mars Weather App</title>
-          <link rel="icon" href="iconfinder_mars_37873.png" />
+          <link rel="icon" href="iconfinder_planet_univearse_telestial_space_mars_1039574.ico" />
         </Head>
         <Base pictureURL={this.props.apic_pic} copyright={this.props.apic_copyright}>
-          <div className="title color-dark">
+          <div className="title">
+            <Box abswidth="300" absheight="200">
               <h1>{this.props.date}</h1>
               <p>Sol {this.props.sol}</p> 
+            </Box>
           </div>
           <div className="flex-row">
-            <Box>
+            <Box minwidth={minBoxWidth} minheight={minBoxHeight}>
               <h2>Temperature</h2>
-              <p>High: {this.props.high}</p>
-              <p>Low: {this.props.low}</p>
-              <p>Temperature Switch - Dropdown</p>
+              <img className="weather-icon" src="iconfinder_82_Thermometer_Half_Full_183395.svg" />
+              <p className="data-val">High: {this.props.high}° F</p>
+              <p className="data-val">Low: {this.props.low}° F</p>
+              {/*<p>Temperature Switch - Dropdown</p>*/}
             </Box>
-            <Box>
+            <Box minwidth={minBoxWidth} minheight={minBoxHeight}>
               <h2>Wind</h2>
-              <p>Most Common Wind Direction: {this.props.wind}</p>
-              <p>Average Horizontal Wind Speed: {this.props.wind}</p>
+              <img class="weather-icon wind-icon" src="iconfinder_037_ArrowUp_183517.svg" />
+              <p className="unit">(Most Common Direction)</p>
+              <p className="data-val">{this.props.windspeed}</p>
+              <p className="unit">(Avg. Hor. Wind Speed - m/s I think)</p>
             </Box>
-            <Box>
+            <Box minwidth={minBoxWidth} minheight={minBoxHeight}>
               <h2>Pressure</h2>
-              <p>{this.props.pressure}</p>
-              <p>(pascals)</p>
+              <img class="weather-icon" src="iconfinder_100_Pressure_Reading_183532.svg" />
+              <p className="data-val">{this.props.pressure}</p>
+              <p className="unit">(Pascals)</p>
             </Box>
-            <Box>
+            <Box minwidth={minBoxWidth} minheight={minBoxHeight}>
               <h2>Season</h2>
-              {this.props.season}
+              <img class="weather-icon" src={this.getSeasonIcon(this.props.season)} />
+              <p className="data-val">{this.props.season.charAt(0).toUpperCase() + this.props.season.slice(1)}</p> {/*https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript*/}
             </Box>
           </div>
           <div className="flex-row">
-            <img alt="Picture From NASA's Curiosity Rover" src={this.props.curiositypic}></img>
-            <img alt="Picture From NASA's Opportunity Rover" src={this.props.opportunitypic}></img>
-            <img alt="Picture From NASA's Spirit Rover" src={this.props.spiritpic}></img>
+            <img className="rover-photo" alt="Picture From NASA's Curiosity Rover" src={this.props.curiositypic1}/>
+            <img className="rover-photo" alt="Picture From NASA's Opportunity Rover" src={this.props.opportunitypic1}/>
+            <img className="rover-photo" alt="Picture From NASA's Spirit Rover" src={this.props.spiritpic1}/>
+            <img className="rover-photo" alt="Picture From NASA's Curiosity Rover" src={this.props.curiositypic2}/>
+            <img className="rover-photo" alt="Picture From NASA's Opportunity Rover" src={this.props.opportunitypic2}/>
+            <img className="rover-photo" alt="Picture From NASA's Spirit Rover" src={this.props.spiritpic2}/>
           </div>
         </Base>
 
@@ -106,24 +178,38 @@ export default class Index extends React.Component {
             flex-wrap: wrap;
             justify-content: space-around;
           }
-          img {
-            margin-top: 70px;
+          .rover-photo {
+            margin-top: 100px;
             margin-left: 10px;
             margin-right: 10px;
-            width: 400px;
+            margin-bottom: 30px;
+            width: 450px;
           }
-          .title {
-            width: 250px;
-            text-align: center;
-            padding: 1px;
-            margin-top: 10px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 10px;
-            border-radius: 10px;
+          .weather-icon {
+            width: 150px;
           }
-          .title h1 {
+          .wind-icon {
+            transform: rotate(${this.getWindDirectionTransform(this.props.winddirection) + "deg"});
+          }
+          h1 {
             margin-bottom: 5px;
+          }
+          h2 {
+            text-decoration: underline;
+            font-size: xx-large;
+          }
+          .data-val {
+            font-size: xx-large;
+            margin-bottom: 0px;
+          }
+          .unit {
+            margin-top: 0px;
+            font-size: large;
+          }
+          .title div {
+            padding: 1px;
+            margin-bottom: 20px;
+            margin-top: 10px;
           }
           .title p {
             font-size: x-large;
@@ -133,209 +219,4 @@ export default class Index extends React.Component {
       </>
     );
   }
-  /*return (
-    <div className="container">
-      <Head
-        <title>Current Weather - Mars Weather App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/zeit/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-between;s site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        .logo {
-          height: 1em;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
-  )*/
 }
