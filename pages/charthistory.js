@@ -46,17 +46,13 @@ export default function ChartHistory() {
         }]
     }
 
-    // Fill datasets
-    /*function getData(start_date, end_date) {*/
+    // Get data for start and end date, and parse it
+    /*let results = {start_date, end_date} // Make SQL Call
+        // Fill datasets
         // date
         // temp
         // avg. wind speed
         // pressure
-
-    // Charts.js variables
-
-    // Get data for start and end date, and parse it
-    /*let results = {start_date, end_date} // Make SQL Call
     for (day in results) {
         // Append date for bar graph labels
         labels.push(day.date);
@@ -75,55 +71,68 @@ export default function ChartHistory() {
         </Head>
         <Base>
           <h1>Weather History</h1>
-          <div className="top">
-            <form>
-              <label>Start Date</label>
-              <input type="date"/>
-              <label>End Date</label>
-              <input type="dsate"/>
-              <input type="submit" value="Draw Charts"/>
-            </form>
-            <hr/>
-            <p>
-              This tool allows you to chart and exmaine Mars weather data. More specifically, it graphs temperature,
-              wind speed and direction, and pressure data for all days starting from the start date up through the 
-              end date. We are limited by the amount of data we have however, as the NASA API I use isn't one that 
-              allows you to query historical numbers
-             </p>
-          </div>
+          <p>
+            This tool allows you to chart and exmaine Mars weather data. More specifically, it graphs temperature,
+            wind speed and direction, and pressure data for all days starting from the start date up through the 
+            end date. We are limited by the amount of data we have however, as the NASA API I use isn't one that 
+            allows you to query historical numbers
+          </p>
+          <form>
+            <label>
+              Start Date
+              <input id="startdate" type="date"/>
+            </label>
+            <label>
+              End Date
+              <input id="enddate" type="date"/>
+            </label>
+            <input type="submit" value="Draw Charts"/>
+          </form>
           <div className="charts">
             <div>
-                <Bar options={{ maintainAspectRatio: false }} data={temperature_data} height={200} width={300}/>
+              <Bar data={temperature_data} />
             </div>
             <div>
-                <Bar options={{ maintainAspectRatio: false }} data={wind_data} height={200} width={300}/>
+              <Bar data={wind_data} />
             </div>
             <div>
-                <Bar options={{ maintainAspectRatio: false }} data={pressure_data} height={200} width={300}/>
+              <Bar data={pressure_data} />
             </div>
           </div>
           <style jsx>{`
-            /*
-            */
             h1 {
-              border-bottom: 1px solid black; 
+              text-align: center;
+            }
+            form {
+              max-width: 700px;
               text-align: center;
               margin: auto;
             }
-            .top {
-              display: flex;
-              flex-direction: row;
-              flex-wrap: wrap;
-              justify-content: space-around;
-            }
-            .charts {
-                margin: 10px;
-            }
-            form {
-                width: 45%;
-            }
             form input[type="submit"] {
+              margin: auto;
+              margin-top: 10px;
+              width: 101%;
+              height: 50px;
+              background-color: darkorange;
+              border-color: darkorange;
+              color: white;
+              font-size: 1.2em;
+            }
+            form input[type="date"] {
               width: 100%;
+            }
+            label {
+              display: block;
+              margin-top: 10px;
+              font-weight: bold;
+            }
+            p {
+              text-align: center;
+              padding: 10px;
+              font-size: 1.3em;
+            }
+            .charts div {
+              margin-top: 40px;
             }
           `}
           </style>

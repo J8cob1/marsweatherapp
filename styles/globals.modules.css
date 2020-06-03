@@ -4,6 +4,7 @@ body, html {
 }
 #__next {
   flex-grow: 1;
+  width: 100%;
 }
 body {
   color: white;
@@ -18,8 +19,8 @@ body {
   color: white;
 }
 .color-light {
-  background-color: lightgrey;
-  border-color: lightgrey; /**/
+  background-color: whitesmoke;
+  border-color: whitesmoke; /**/
   color: black;
 }
 .color-dark {
