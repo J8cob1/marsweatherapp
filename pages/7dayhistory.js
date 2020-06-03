@@ -6,7 +6,7 @@ export default function SevenDayHistory() {
     <>
       <Head>
         <title>Seven Day History - Mars Weather App</title>
-        <link rel="icon" href="favicon.ico" />
+        <link rel="icon" href="iconfinder_planet_univearse_telestial_space_mars_1039574.ico" />
       </Head>
       <Base>
         Seven Day History

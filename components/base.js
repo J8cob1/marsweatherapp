@@ -5,9 +5,9 @@ import Footer from './footer'
 import { Children } from 'react'
 
 // Gets Mars Weather Data From NASA
-export async function getStaticProps(context) {
+/*export async function getStaticProps(context) {
   // https://stackoverflow.com/questions/4870328/read-environment-variables-in-node-js
-  let apiKey = process.env.NASA_API_KEY;
+  /*let apiKey = process.env.NASA_API_KEY;
 
   console.log("We Propped")
 
@@ -21,28 +21,10 @@ export async function getStaticProps(context) {
       apic_copyright: APOTDQuery.hasOwnProperty("copyright") ? APOTDQuery.copyright : "",
     }
   };
-}
+}*/
 
 // A function components, since I don't know if I need anything else
 export default class Base extends React.Component {
-  /*static async getStaticProps(context) {
-    // https://stackoverflow.com/questions/4870328/read-environment-variables-in-node-js
-    let apiKey = process.env.NASA_API_KEY;
-      
-        console.log("We Propped")
-      
-    // Get Astronomy Picture of the day. We will use it as a background image
-    let APOTDQuery = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`);
-    APOTDQuery = await APOTDQuery.json();
-      
-    return {
-      props: {
-        apic_pic: APOTDQuery.hdurl,
-        apic_copyright: APOTDQuery.hasOwnProperty("copyright") ? APOTDQuery.copyright : "",
-      }
-    };
-  }*/
-
   render() {
     let pictureURL = "";
     let copyright = "";
@@ -54,33 +36,37 @@ export default class Base extends React.Component {
     }
 
     return (
-        <div className="flex">
+      <div className="flex background">
         <Header></Header>
-        <div className="color-light flex-grow">
+        <div className="color-light">
             {this.props.children}
         </div>
         <Footer copyright={copyright}></Footer>
-
         <style jsx>{`
             div {
-                width: 100%;
-                height: 100%;
-                flex-grow: 1;
-                background-image: url(${pictureURL});
-                background-size: cover;
+              width: 100%;
+              height: 100%;
+              padding: 0px;
+              margin: 0;
+            }
+            .background {
+              /*background-image: url({pictureURL});
+              background-size: cover;*/
+              padding: 0px;
+              margin: 0;
             }
             .flex-grow {
-                flex-grow: 1;
+              flex-grow: 1;
             }
             .flex {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                flex-wrap: nowrap;
-                height: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              flex-wrap: nowrap;
+              height: 100%;
             }
         `}</style>
-        </div>
+      </div>
     );
   }
 }
