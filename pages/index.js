@@ -69,7 +69,7 @@ export default class Index extends React.Component {
     }
   }
 
-  getWindDirectionTransform(windDirection) {
+  getWindDirectionTransform(windDirection) { // Could just try to get the degree and rotate it that way
     // https://en.wikipedia.org/wiki/Points_of_the_compass
     switch (windDirection) {
       case ("N"):
@@ -139,8 +139,8 @@ export default class Index extends React.Component {
               <h2>Wind</h2>
               <img class="weather-icon wind-icon" src="iconfinder_037_ArrowUp_183517.svg" />
               <p className="unit">(Most Common Direction)</p>
-              <p className="data-val">{this.props.windspeed}</p>
-              <p className="unit">(Avg. Hor. Wind Speed - m/s I think)</p>
+              <p className="data-val">{this.props.windspeed} m/s</p>
+              <p className="unit">(Avg. Hor. Wind Speed)</p>
             </Box>
             <Box minwidth={minBoxWidth} minheight={minBoxHeight}>
               <h2>Pressure</h2>
