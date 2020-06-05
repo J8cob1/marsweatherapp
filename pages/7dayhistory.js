@@ -9,7 +9,7 @@ import HistoryBox from '../components/historyBox'
 export async function getStaticProps() {
   // https://stackoverflow.com/questions/4870328/read-environment-variables-in-node-js
   let apiKey = process.env.NASA_API_KEY;
-  
+
   // Get Weather Data
   let weatherQuery = await fetch("https://api.nasa.gov/insight_weather/?api_key=" + apiKey + "&feedtype=json&ver=1.0");
   weatherQuery = await weatherQuery.json();
@@ -84,7 +84,7 @@ export default function SevenDayHistory(props) {
 
       <style jsx global>{`
         h2 {
-          text-decoration: underline;
+          stext-decoration: underline;
           font-size: xx-large;
         }
         .flex-col {

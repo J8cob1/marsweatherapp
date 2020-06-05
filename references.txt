@@ -66,8 +66,8 @@ Other/Specific Links:
 - https://pusher.com/tutorials/realtime-data-visualization-nextjs
 - https://medium.com/@dbredvick/how-to-create-a-cron-job-with-nextjs-and-now-159aa973c00e - inspired me to try to get a cron job for automatic db population up... if I get it setup in time
 - Got the degree symbol from https://www.36degreesnorth.co/how-to/?utm_medium=ppc&utm_source=adwords&utm_term=how%20to%20type%20the%20degree%20symbol&utm_campaign=How+to+Type+the+Degree+Symbol&hsa_kw=how%20to%20type%20the%20degree%20symbol&hsa_src=g&hsa_mt=b&hsa_tgt=kwd-525163130521&hsa_ver=3&hsa_acc=2751012188&hsa_net=adwords&hsa_cam=1565575423&hsa_ad=295203439353&hsa_grp=62022056831&gclid=EAIaIQobChMI89rZ47bs6QIVIRh9Ch0EPwwsEAAYASAAEgJT6_D_BwE
-
 - https://aws.amazon.com/blogs/database/choosing-the-right-dynamodb-partition-key/
+- https://en.wikipedia.org/wiki/Pascal_(unit)
 
 Maybe sources but maybe not (better safe than sorry)
 - https://stackoverflow.com/questions/57712682/react-functional-component-static-property
@@ -92,4 +92,6 @@ Maybe sources but maybe not (better safe than sorry)
 - https://stackoverflow.com/questions/48156902/how-can-i-draw-red-horizontal-line-in-react
 - https://stackoverflow.com/questions/43380260/draw-horizontal-rule-in-react-native
 - https://stackoverflow.com/questions/14821087/horizontal-line-and-right-way-to-code-it-in-html-css
+- https://stackoverflow.com/questions/7490798/git-wont-add-files
+
 Other links not spcified here may be cited in specific files

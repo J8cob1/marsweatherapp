@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "chart.js": "^2.9.3",
+    "dynamodb": "^1.2.1",
     "moment-timezone": "^0.5.31",
     "next": "9.4.2",
     "react": "16.13.1",

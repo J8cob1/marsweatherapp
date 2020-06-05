@@ -4,6 +4,31 @@ import Box from '../components/box'
 import { render } from 'react-dom'
 import moment from 'moment-timezone'
 import celciusToFehrenheit from '../shared_functions'
+import { getEntryFromDB } from '../database_functions'
+
+// Database configuration and setup
+// https://www.npmjs.com/package/dynamodb
+var dynamodb = require('dynamodb');
+dynamo.AWS.config.update({accessKeyId: process.env.DATABASE_ACCESS_KEY, secretAccessKey: process.env.DATABASE_SECRET, region: "us-west-2"});
+
+var WeatherEntry = dynamo.define('WeatherEntry', {
+  hashKey : 'sol',
+ 
+  // add the timestamp attributes (updatedAt, createdAt)
+  timestamps : true,
+
+  schema : {
+    sol              : dynamo.types.String(),
+    date             : dynamo.types.String(),
+    high             : dynamo.types.String(),
+    low              : dynamo.types.String(),
+    wind_direction   : dynamo.types.String(),
+    wind_speed       : dynamo.types.String(),
+    pressure         : dynamo.types.String(),
+    season           : dynamo.types.String(),
+    settings : {}
+  }
+});
 
 // Gets Mars Weather Data From NASA
 export async function getStaticProps() {
@@ -15,6 +40,11 @@ export async function getStaticProps() {
   weatherQuery = await weatherQuery.json();
   let sol = weatherQuery.sol_keys[weatherQuery.sol_keys.length-1];
   let latestWeatherObj = weatherQuery[weatherQuery.sol_keys[weatherQuery.sol_keys.length-1]]; /**/
+
+  // Update dadatabase
+  weatherQuery.sol_keys.forEach(dataObject => {
+    
+  });
 
   // Get picture URLs
   let curiosityRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${sol}&api_key=${apiKey}`);
