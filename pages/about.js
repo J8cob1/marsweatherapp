@@ -22,7 +22,6 @@ export default function About() {
               This app started off as an npm next.js template, and makes use of the following technologies:
               <ul>
                 <li>Next.js (Node.js + React)</li>
-                <li>SQLite - eh</li>
                 <li>Varcel</li>
                 <li>Moment and Moment-Timezone</li>
                 <li>Charts.js</li>
