@@ -29,7 +29,7 @@ export default function About() {
                 <li>NASA's Mars Rover Photos API</li>
                 <li>NASA's Astronomy Picture of the Day API</li>
               </ul>
-              Next.js and SQLite form the backbone of the application, Varcel is used for deployment, moment/moment-timezone are used for date
+              Next.js forms the backend of the application, Varcel is used for deployment, moment/moment-timezone are used for date
               conversion, and NASA's APIs are used for data.
             </p> 
           </section>
