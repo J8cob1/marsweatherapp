@@ -41,9 +41,9 @@ export async function getStaticProps() {
       curiositypic1: curiosityRoverPhotoQuery.photos.length > 0 ? curiosityRoverPhotoQuery.photos[0].img_src : "",
       opportunitypic1: opportunityRoverPhotoQuery.photos.length > 0 ? opportunityRoverPhotoQuery.photos[0].img_src : "",
       spiritpic1: spiritRoverPhotoQuery.photos.length > 0 ? spiritRoverPhotoQuery.photos[0].img_src : "",
-      curiositypic2: curiosityRoverPhotoQuery.photos.length > 1 ? curiosityRoverPhotoQuery.photos[1].img_src : "",
-      opportunitypic2: opportunityRoverPhotoQuery.photos.length > 1 ? opportunityRoverPhotoQuery.photos[1].img_src : "",
-      spiritpic2: spiritRoverPhotoQuery.photos.length > 1 ? spiritRoverPhotoQuery.photos[1].img_src : "",
+      curiositypic2: curiosityRoverPhotoQuery.photos.length > 2 ? curiosityRoverPhotoQuery.photos[2].img_src : "", // I skip to the third image because the first and second look almost the same
+      opportunitypic2: opportunityRoverPhotoQuery.photos.length > 2 ? opportunityRoverPhotoQuery.photos[2].img_src : "",
+      spiritpic2: spiritRoverPhotoQuery.photos.length > 2 ? spiritRoverPhotoQuery.photos[2].img_src : "",
       apic_pic: APOTDQuery.hdurl ? APOTDQuery.hdurl : (APOTDQuery.url ? APOTDQuery.url : ""),
       apic_copyright: APOTDQuery.hasOwnProperty("copyright") && (APOTDQuery.hdurl || APOTDQuery.url) ? APOTDQuery.copyright : "",
     }
@@ -104,6 +104,8 @@ export default class Index extends React.Component {
         return 315;
       case ("NNW"):
         return 337.5;
+      default:
+        return null;
     }
   }
 
@@ -130,27 +132,28 @@ export default class Index extends React.Component {
           <div className="flex-row">
             <Box minwidth={minBoxWidth} minheight={minBoxHeight}>
               <h2>Temperature</h2>
-              <img className="weather-icon" src="iconfinder_82_Thermometer_Half_Full_183395.svg" />
+              <img className="weather-icon" alt="Temperature Icon" src="iconfinder_82_Thermometer_Half_Full_183395.svg" />
               <p className="data-val">High: {this.props.high}° F</p>
               <p className="data-val">Low: {this.props.low}° F</p>
               {/*<p>Temperature Switch - Dropdown</p>*/}
             </Box>
             <Box minwidth={minBoxWidth} minheight={minBoxHeight}>
               <h2>Wind</h2>
-              <img class="weather-icon wind-icon" src="iconfinder_037_ArrowUp_183517.svg" />
+              <span className="data-val">{this.getWindDirectionTransform(this.props.winddirection) == null ? "Unkown" : ""}</span>
+              <img className="weather-icon wind-icon" alt="Wind Icon" src={this.getWindDirectionTransform(this.props.winddirection) != null ? "iconfinder_037_ArrowUp_183517.svg" : ""}/>
               <p className="unit">(Most Common Direction)</p>
               <p className="data-val">{this.props.windspeed} m/s</p>
               <p className="unit">(Avg. Hor. Wind Speed)</p>
             </Box>
             <Box minwidth={minBoxWidth} minheight={minBoxHeight}>
               <h2>Pressure</h2>
-              <img class="weather-icon" src="iconfinder_100_Pressure_Reading_183532.svg" />
+              <img className="weather-icon" alt="Pressure Icon" src="iconfinder_100_Pressure_Reading_183532.svg" />
               <p className="data-val">{this.props.pressure}</p>
               <p className="unit">(Pascals)</p>
             </Box>
             <Box minwidth={minBoxWidth} minheight={minBoxHeight}>
               <h2>Season</h2>
-              <img class="weather-icon" src={this.getSeasonIcon(this.props.season)} />
+              <img class="weather-icon" alt="Season Icon" src={this.getSeasonIcon(this.props.season)} />
               <p className="data-val">{this.props.season.charAt(0).toUpperCase() + this.props.season.slice(1)}</p> {/*https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript*/}
             </Box>
           </div>
@@ -178,11 +181,12 @@ export default class Index extends React.Component {
             justify-content: space-around;
           }
           .rover-photo {
-            margin-top: 100px;
+            margin-top: 30px;
             margin-left: 10px;
             margin-right: 10px;
             margin-bottom: 30px;
             width: 450px;
+            max-width: 100%;
           }
           .weather-icon {
             width: 150px;

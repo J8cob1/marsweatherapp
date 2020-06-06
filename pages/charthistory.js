@@ -20,6 +20,7 @@ export async function getStaticProps() {
 
 // A function component, since I don't know if I need anything else
 export default function ChartHistory(props) {
+    // Some sources I used in this file
     // https://github.com/jerairrest/react-chartjs-2/issues/388 told me how to get dataset colors
     // https://www.chartjs.org/docs/latest/charts/bar.html#data-structure
     // https://github.com/jerairrest/react-chartjs-2
@@ -85,7 +86,7 @@ export default function ChartHistory(props) {
     let wind_speed_data = {
       labels: [],
       datasets: [{
-          label: "Avgerage Horizontal Wind Speed (m/s)",
+          label: "Average Horizontal Wind Speed (m/s)",
           backgroundColor: "gold",
           barThickness: 50,
           minBarLength: 100,
@@ -123,13 +124,13 @@ export default function ChartHistory(props) {
       pressure_data.labels.push(date);
 
       // Set data
-      temperature_high_data.datasets[0].data.push(weatherOnSingleDay.AT.mx);
-      temperature_low_data.datasets[0].data.push(weatherOnSingleDay.AT.mn);
-      wind_direction_data.datasets[0].data.push(weatherOnSingleDay.WD.most_common.compass_degrees);
-      wind_speed_data.datasets[0].data.push(weatherOnSingleDay.HWS.av);
-      pressure_data.datasets[0].data.push(weatherOnSingleDay.PRE.av);
+      temperature_high_data.datasets[0].data.push(weatherOnSingleDay.AT ? weatherOnSingleDay.AT.mx : null);
+      temperature_low_data.datasets[0].data.push(weatherOnSingleDay.AT ? weatherOnSingleDay.AT.mn : null);
+      wind_direction_data.datasets[0].data.push(weatherOnSingleDay.WD.most_common != null ? weatherOnSingleDay.WD.most_common.compass_degrees : null);
+      wind_speed_data.datasets[0].data.push(weatherOnSingleDay.HWS ? weatherOnSingleDay.HWS.av : null);
+      pressure_data.datasets[0].data.push(weatherOnSingleDay.PRE ? weatherOnSingleDay.PRE.av : null);
     }
-    /*    <h1>Weather History</h1>
+    /*    <h1>Weather History</h1>q
           <p>
             This tool allows you to chart and exmaine Mars weather data. More specifically, it graphs temperature,
             wind speed and direction, and pressure data for all days starting from the start date up through the 
@@ -154,29 +155,35 @@ export default function ChartHistory(props) {
           <link rel="icon" href="iconfinder_planet_univearse_telestial_space_mars_1039574.ico" />
         </Head>
         <Base>
-          <h1>Weather History</h1>
-          <p>
-            This page allows you to chart and exmaine the Mars weather data for the last seven days. More specifically, it graphs temperature,
-            wind speed and direction, and pressure data for the last seven days.
-          </p>
-          <div className="charts">
-            <div>
-              <Bar data={temperature_high_data} options={chart_options} />
-            </div>
-            <div>
-              <Bar data={temperature_low_data} options={chart_options} />
-            </div>
-            <div>
-              <Bar data={wind_direction_data} options={chart_options} />
-            </div>
-            <div>
-              <Bar data={wind_speed_data} options={chart_options} />
-            </div>
-            <div>
-              <Bar data={pressure_data} options={chart_options} />
+          <div className="color-light">
+            <h1>Weather History</h1>
+            <p>
+              This page allows you to chart and exmaine the Mars weather data for the last seven days. More specifically, it graphs temperature,
+              wind speed and direction, and pressure data for the last seven days.
+            </p>
+            <div className="charts">
+              <div>
+                <Bar data={temperature_high_data} options={chart_options} />
+              </div>
+              <div>
+                <Bar data={temperature_low_data} options={chart_options} />
+              </div>
+              <div>
+                <Bar data={wind_direction_data} options={chart_options} />
+              </div>
+              <div>
+                <Bar data={wind_speed_data} options={chart_options} />
+              </div>
+              <div>
+                <Bar data={pressure_data} options={chart_options} />
+              </div>
             </div>
           </div>
+
           <style jsx>{`
+            * {
+              color: black;
+            }
             h1 {
               text-align: center;
             }

@@ -15,20 +15,17 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 .color-primary {
-  background-color: orangered;
-  border-color: orangered; /**/
+  background-color: rgb(87, 0, 0);
+  border-color: rgb(87, 0, 0); /**/
   color: white;
 }
 .color-light {
-  background-color: whitesmoke;
-  border-color: whitesmoke; /**/
+  background-color: white;
+  border-color: white; /**/
   color: black;
 }
 .color-dark {
-  background-color: darkred;
-  border-color: darkred; /**/
+  background-color: rgb(87, 0, 0);
+  border-color: rgb(87, 0, 0); /**/
   color: white;
-}
-.background-opaque {
-  background-color: rgba(211, 211, 211, 0.747);
 }

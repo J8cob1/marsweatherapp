@@ -8,18 +8,20 @@ export default function Footer(props) {
 
   return (
   <>
-  <footer className="color-primary">
+  <footer className="color-primary" role="contentinfo">
     <p>
-      Powered by Node, Next.js and React. I hope you enjoy!
-      Favicon courtesy of <a href="https://www.iconfinder.com/brian_ondari">Brian Ondari</a> from IconFinder, licensed under the <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a> license
-      <br /><b>Note:</b> some of the latest data may not be super accurate, since not many measurements have come in yet
-      {footerMessage}
+      Powered by Next.js and other technologies (see the about page if interested). I hope you enjoy!
+      Favicon courtesy of <a href="https://www.iconfinder.com/brian_ondari">Brian Ondari</a> from IconFinder, licensed under the <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a> license. {footerMessage}
+      <br/><b>Note:</b> some of the latest data may not be super accurate, since not many measurements have come in yet. 
     </p>
   </footer>
 
   <style jsx>{`
     footer * {
       padding: 5px;
+    }
+    a {
+      color: white;
     }
     footer {
       color: white;

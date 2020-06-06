@@ -7,9 +7,7 @@ import { Children } from 'react'
 // Gets Mars Weather Data From NASA
 /*export async function getStaticProps(context) {
   // https://stackoverflow.com/questions/4870328/read-environment-variables-in-node-js
-  /*let apiKey = process.env.NASA_API_KEY;
-
-  console.log("We Propped")
+  let apiKey = process.env.NASA_API_KEY;
 
   // Get Astronomy Picture of the day. We will use it as a background image
   let APOTDQuery = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`);
@@ -38,7 +36,7 @@ export default class Base extends React.Component {
     return (
       <div className="flex background">
         <Header></Header>
-        <div className="color-light">
+        <div role="main">
             {this.props.children}
         </div>
         <Footer copyright={copyright}></Footer>
@@ -50,8 +48,8 @@ export default class Base extends React.Component {
               margin: 0;
             }
             .background {
-              /*background-image: url({pictureURL});
-              background-size: cover;*/
+              background-image: url(${pictureURL});
+              background-size: cover;
               padding: 0px;
               margin: 0;
             }
