@@ -13,8 +13,8 @@ export default function About() {
           <h1>About</h1>
           <p className="header-text">
             This web app tells you the weather of Mars at Elysium Plinita using data from NASA's API's.               
-            It displays the latest weather report, with some pictures, as well as the weather reports for the last seven days, and gives 
-            you the ability to graph and compare all of the weather data we have stored the app's local database. I hope you enjoy!
+            It displays the latest weather report, with some pictures, and the weather reports for the last seven days. 
+            There is also a page that graphs specific weather metrics of the last seven days for you. I hope you enjoy!
           </p>
           <section>
             <h2>Technology Stack</h2>
