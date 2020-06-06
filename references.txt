@@ -3,6 +3,8 @@ Some Significant Sources:
 - https://nextjs.org/docs... (next.js documentation)
 - https://nextjs.org/learn... (next.js tutorials)
 - https://reactjs.org/docs... (react.js docs)
+- https://www.chartjs.org/docs/... (charts.js docs)
+- https://developer.mozilla.org/... mdn documentation
 - The code that came with npm init next-js app
 
 Other/Specific Links:
@@ -47,6 +49,13 @@ Other/Specific Links:
 - https://stackoverflow.com/questions/10422949/css-background-opacity
 - https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
 - https://stackoverflow.com/questions/22876978/loop-inside-react-jsx
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+- https://stackoverflow.com/questions/38272444/chart-js-axes-label-font-size
+- https://www.npmjs.com/package/react-chartjs-2
+- https://github.com/jerairrest/react-chartjs-2/issues/388 told me how to get dataset colors
+- https://www.chartjs.org/docs/latest/charts/bar.html#data-structure
+- https://github.com/jerairrest/react-chartjs-2
+- https://pusher.com/tutorials/realtime-data-visualization-nextjs
 
 Maybe sources but maybe not (better safe than sorry)
 - https://stackoverflow.com/questions/57712682/react-functional-component-static-property
@@ -57,3 +66,6 @@ Maybe sources but maybe not (better safe than sorry)
 - https://stackoverflow.com/questions/1910082/git-stash-apply-version
 - https://stackoverflow.com/questions/927358/how-do-i-undo-the-most-recent-local-commits-in-git (used for different project)
 - https://stackoverflow.com/questions/3148415/how-to-make-a-vertical-line-in-html
+- https://stackoverflow.com/questions/27910719/in-chart-js-set-chart-title-name-of-x-axis-and-y-axis
+
+Other links not spcified here may be cited in specific files
