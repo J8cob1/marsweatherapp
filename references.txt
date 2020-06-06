@@ -2,12 +2,20 @@ Some Significant Sources:
 - Lecture Slides
 - https://nextjs.org/docs... (next.js documentation)
 - https://nextjs.org/learn... (next.js tutorials)
-- https://reactjs.org/docs... (react.js docs)
 - https://www.chartjs.org/docs/... (charts.js docs)
 - https://developer.mozilla.org/... mdn documentation
+- Copied code for _document.js from here: https://nextjs.org/docs/advanced-features/custom-document. Also looked at:
+  * https://github.com/isaachinman/next-i18next/issues/20 in the _document.js file. 
+  * https://stackoverflow.com/questions/57008211/nextjs-add-html-lang-attribute-to-custom-document-in-object-notation
+  * and https://github.com/vercel/next.js/issues/9160
 - The code that came with npm init next-js app
+- Copied ARIA landmarking form here: https://dequeuniversity.com/rules/axe/3.3/landmark-one-main and tried to apply it where I thought it fit in my page
+- https://www.iconfinder.com/ for icons
 
 Other/Specific Links:
+- https://momentjs.com/ (used as documentation... I think)
+- https://stackoverflow.com/questions/26134182/converting-utc-to-pacific-time-using-moment-timezone-javascript
+- https://reactjs.org/docs... (react.js docs)
 - https://nextjs.org/learn/basics/* tutorials--both their code and the knowledge form them (I didn't go through all of them, but I worked off some of the code I saw there)
 - https://github.com/zeit/next.js/issues/3105
 - https://askubuntu.com/questions/426750/how-can-i-update-my-nodejs-to-the-latest-version
@@ -56,6 +64,10 @@ Other/Specific Links:
 - https://www.chartjs.org/docs/latest/charts/bar.html#data-structure
 - https://github.com/jerairrest/react-chartjs-2
 - https://pusher.com/tutorials/realtime-data-visualization-nextjs
+- https://medium.com/@dbredvick/how-to-create-a-cron-job-with-nextjs-and-now-159aa973c00e - inspired me to try to get a cron job for automatic db population up... if I get it setup in time
+- Got the degree symbol from https://www.36degreesnorth.co/how-to/?utm_medium=ppc&utm_source=adwords&utm_term=how%20to%20type%20the%20degree%20symbol&utm_campaign=How+to+Type+the+Degree+Symbol&hsa_kw=how%20to%20type%20the%20degree%20symbol&hsa_src=g&hsa_mt=b&hsa_tgt=kwd-525163130521&hsa_ver=3&hsa_acc=2751012188&hsa_net=adwords&hsa_cam=1565575423&hsa_ad=295203439353&hsa_grp=62022056831&gclid=EAIaIQobChMI89rZ47bs6QIVIRh9Ch0EPwwsEAAYASAAEgJT6_D_BwE
+
+- https://aws.amazon.com/blogs/database/choosing-the-right-dynamodb-partition-key/
 
 Maybe sources but maybe not (better safe than sorry)
 - https://stackoverflow.com/questions/57712682/react-functional-component-static-property
@@ -67,5 +79,17 @@ Maybe sources but maybe not (better safe than sorry)
 - https://stackoverflow.com/questions/927358/how-do-i-undo-the-most-recent-local-commits-in-git (used for different project)
 - https://stackoverflow.com/questions/3148415/how-to-make-a-vertical-line-in-html
 - https://stackoverflow.com/questions/27910719/in-chart-js-set-chart-title-name-of-x-axis-and-y-axis
-
+- https://stackoverflow.com/questions/39861483/content-disappears-when-flex-item-wraps
+- https://stackoverflow.com/questions/1992114/how-do-you-create-a-hidden-div-that-doesnt-create-a-line-break-or-horizontal-sp
+- https://stackoverflow.com/questions/61310847/how-to-set-mhtl-lang-attribute-dinamicly-on-nextjs-document
+- https://stackoverflow.com/questions/57759562/how-to-fetch-data-only-once-in-a-next-js-app-and-make-it-accesible-to-all-the-ap
+- https://stackoverflow.com/questions/11580961/sending-command-line-arguments-to-npm-script
+- https://stackoverflow.com/questions/5327495/list-all-environment-variables-from-the-command-line/40967338#40967338 
+- https://stackoverflow.com/questions/51491101/how-to-print-echo-windows-environment-variables-such-as-path-without-interpretin
+- https://superuser.com/questions/341192/how-can-i-display-the-contents-of-an-environment-variable-from-the-command-promp -
+- https://stackoverflow.com/questions/37140799/passing-environment-variables-in-npm-scripts
+- https://stackoverflow.com/questions/34365271/hr-inside-container-with-display-flex-become-corrupted
+- https://stackoverflow.com/questions/48156902/how-can-i-draw-red-horizontal-line-in-react
+- https://stackoverflow.com/questions/43380260/draw-horizontal-rule-in-react-native
+- https://stackoverflow.com/questions/14821087/horizontal-line-and-right-way-to-code-it-in-html-css
 Other links not spcified here may be cited in specific files

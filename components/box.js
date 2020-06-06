@@ -26,10 +26,11 @@ export default function Box(props) {
         div {
           ${width}
           ${height}
+          padding: 10px;
           text-align: center;
-          margin: auto;
+          margin: 20px auto;
+          max-width: 100%;
           border-radius: 10px;
-          opacity: 0.9;
         }
       `}</style>
     </div>

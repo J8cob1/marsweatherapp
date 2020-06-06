@@ -21,18 +21,24 @@ export async function getStaticProps() {
     data.push({
       date: moment(weatherQuery[sol].Last_UTC).tz('America/Los_Angeles').format('ll'),
       "sol": sol,
-      high: celciusToFehrenheit(weatherQuery[sol].AT.mx),
-      low: celciusToFehrenheit(weatherQuery[sol].AT.mn),
-      wind_direction: weatherQuery[sol].WD.most_common.compass_point,
-      wind_speed: weatherQuery[sol].HWS.av,
-      pressure: weatherQuery[sol].PRE.av,
+      high: weatherQuery[sol].AT ? celciusToFehrenheit(weatherQuery[sol].AT.mx) : "Unknown",
+      low: weatherQuery[sol].AT ? celciusToFehrenheit(weatherQuery[sol].AT.mn) : "Unknown",
+      wind_direction: weatherQuery[sol].WD.most_common ? weatherQuery[sol].WD.most_common.compass_point : "Unknown",
+      wind_speed: weatherQuery[sol].HWS ? weatherQuery[sol].HWS.av : "Unknown",
+      pressure: weatherQuery[sol].PRE ? weatherQuery[sol].PRE.av : "Unknown",
       season: weatherQuery[sol].Season,
     });
   });
 
+  // Get Astronomy Picture of the day. We will use it as a background image
+  let APOTDQuery = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`);
+  APOTDQuery = await APOTDQuery.json();
+
   return {
     props: {
-      boxes: data
+      boxes: data,
+      apic_pic: APOTDQuery.hdurl ? APOTDQuery.hdurl : (APOTDQuery.url ? APOTDQuery.url : ""),
+      apic_copyright: APOTDQuery.hasOwnProperty("copyright") && (APOTDQuery.hdurl || APOTDQuery.url) ? APOTDQuery.copyright : "",
     }
   };
 }
@@ -44,7 +50,7 @@ export default function SevenDayHistory(props) {
       <title>Seven Day History - Mars Weather App</title>
       <link rel="icon" href="iconfinder_planet_univearse_telestial_space_mars_1039574.ico" />
     </Head>
-    <Base>
+    <Base pictureURL={props.apic_pic} copyright={props.apic_copyright}>
       <div className="title">
         <Box abswidth="300" absheight="200">
           <h1>7 Day History</h1>
@@ -99,9 +105,6 @@ export default function SevenDayHistory(props) {
         .title div {
           margin-bottom: 30px;
           margin-top: 10px;
-        }
-        .title h1 {
-          padding: 10px;
         }
       `}</style>
       </Base>

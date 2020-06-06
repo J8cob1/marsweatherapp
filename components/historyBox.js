@@ -14,13 +14,13 @@ export default function HistoryBox(props) {
 
   // Return HTML
   return (
-    <Box minheight="400" minwidth="300">
+    <Box minheight="400" minwidth="320">
       <h2>{date}</h2>
       <p><b>Sol: </b> {sol}</p>
       <p><b>High: </b>{high}° F</p>
       <p><b>Low: </b>{low}° F</p>
-      <p><b>Most Common Wind Dir: </b>{wind_direction}</p>
-      <p><b>Avg Hor. Wind Speed: </b>{wind_speed} m/s</p>
+      <p><b>Most Common Wind Dir.: </b>{wind_direction}</p>
+      <p><b>Avg. Horizontal Wind Speed: </b>{wind_speed} m/s</p>
       <p><b>Pressure: </b>{pressure} Pascals</p>
       <p><b>Season: </b>{season.charAt(0).toUpperCase() + season.slice(1)}</p>
     </Box>
