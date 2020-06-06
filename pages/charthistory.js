@@ -1,76 +1,135 @@
 import Head from 'next/head'
 import Base from '../components/base'
 import { Bar } from 'react-chartjs-2';
+import moment from 'moment-timezone'
 
-// Database Query Functions
+// Gets Mars Weather Data From NASA
+export async function getStaticProps() {
+  // https://stackoverflow.com/questions/4870328/read-environment-variables-in-node-js
+  let apiKey = process.env.NASA_API_KEY;
+
+  // Get weather data and return it
+  let weatherQuery = await fetch("https://api.nasa.gov/insight_weather/?api_key=" + apiKey + "&feedtype=json&ver=1.0");
+  let response = await weatherQuery.json();
+  return {
+    props: {
+      weatherObject: response
+    }
+  };
+}
 
 // A function component, since I don't know if I need anything else
-export default function ChartHistory() {
+export default function ChartHistory(props) {
     // https://github.com/jerairrest/react-chartjs-2/issues/388 told me how to get dataset colors
     // https://www.chartjs.org/docs/latest/charts/bar.html#data-structure
     // https://github.com/jerairrest/react-chartjs-2
     // https://pusher.com/tutorials/realtime-data-visualization-nextjs
-    
+
     // Might consider adding a table with data below the charts
 
-    // Dataset Variables
-    let properties = {}
-    let temperature_data = {
-        labels: ["temp 1", "temp 2", "temp 3", "temp 4", "temp 5"],
+    // Define Datasets
+    // https://stackoverflow.com/questions/38272444/chart-js-axes-label-font-size
+    let chart_options = {
+      title: {
+        text: "High Temperature",
+      },
+      scales: {
+        xAxes: [{
+          ticks: {
+            fontSize: 20
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            fontSize: 20
+          }
+        }]
+      },
+      legend: {
+        labels: {
+          fontSize: 25,
+          boxWidth: 0
+        }
+      }
+    }
+    let temperature_high_data = {
+        labels: [],
         datasets: [{
-            label: "Temperature (degrees fahrenheit)",
-            backgroundColor: "red",
-            barThickness: 50,
-            minBarLength: 100,
-            data: [10, 20, 30, 40, 50]
+          label: "High Temperature (° F)",
+          backgroundColor: "red",
+          barThickness: 50,
+          minBarLength: 100,
+          data: []
         }]
     }
-    let wind_data = {
-        labels: ["temp 1", "temp 2", "temp 3", "temp 4", "temp 5"],
+    let temperature_low_data = {
+      labels: [],
+      datasets: [{
+          label: "Low Temperature (° F)",
+          backgroundColor: "blue",
+          barThickness: 50,
+          minBarLength: 100,
+          data: []
+      }]
+    }
+    let wind_direction_data = {
+        labels: [],
         datasets: [{
-            label: "Avg. Wind Speed (m/s)",
+            label: "Most Common Wind Direction (°)",
             backgroundColor: "orange",
             barThickness: 50,
             minBarLength: 100,
-            data: [10, 20, 30, 40, 50]
+            data: []
         }]
+    }
+    let wind_speed_data = {
+      labels: [],
+      datasets: [{
+          label: "Avgerage Horizontal Wind Speed (m/s)",
+          backgroundColor: "gold",
+          barThickness: 50,
+          minBarLength: 100,
+          data: []
+      }]
     }
     let pressure_data = {
-        labels: ["temp 1", "temp 2", "temp 3", "temp 4", "temp 5"],
+        labels: [],
         datasets: [{
             label: "Pressure (pascals)",
-            backgroundColor: "gold",
+            backgroundColor: "green",
             barThickness: 50,
             minBarLength: 100,
-            data: [10, 20, 30, 40, 50]
+            data: []
         }]
     }
 
+    // Get Weather Data
+    let weatherObject = props.weatherObject;
     // Get data for start and end date, and parse it
-    /*let results = {start_date, end_date} // Make SQL Call
-        // Fill datasets
-        // date
-        // temp
-        // avg. wind speed
-        // pressure
-    for (day in results) {
-        // Append date for bar graph labels
-        labels.push(day.date);
-        
-        // Append dataset information
-        temp_dataset.data.push();
-        wind_dataset.data.push();
-        pressure_dataset.push();
-    }*/
+    //let results = {start_date, end_date} // Make SQL Call
 
-    return (
-        <>
-        <Head>
-          <title>Weather History - Mars Weather App</title>
-          <link rel="icon" href="iconfinder_planet_univearse_telestial_space_mars_1039574.ico" />
-        </Head>
-        <Base>
-          <h1>Weather History</h1>
+    // Process weather data and put them in the graphs
+    weatherObject.sol_keys.sort() // Sort just in case. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+    for (let solkey of weatherObject.sol_keys) {
+      // Get wether object
+      let weatherOnSingleDay = weatherObject[solkey]
+
+      // Append Labels
+      let date = moment(weatherOnSingleDay.Last_UTC).tz('America/Los_Angeles').format('ll');
+      temperature_high_data.labels.push(date);
+      temperature_low_data.labels.push(date);
+      wind_direction_data.labels.push(date);
+      wind_speed_data.labels.push(date);
+      pressure_data.labels.push(date);
+
+      // Set data
+      temperature_high_data.datasets[0].data.push(weatherOnSingleDay.AT.mx);
+      temperature_low_data.datasets[0].data.push(weatherOnSingleDay.AT.mn);
+      wind_direction_data.datasets[0].data.push(weatherOnSingleDay.WD.most_common.compass_degrees);
+      wind_speed_data.datasets[0].data.push(weatherOnSingleDay.HWS.av);
+      pressure_data.datasets[0].data.push(weatherOnSingleDay.PRE.av);
+    }
+    /*    <h1>Weather History</h1>
           <p>
             This tool allows you to chart and exmaine Mars weather data. More specifically, it graphs temperature,
             wind speed and direction, and pressure data for all days starting from the start date up through the 
@@ -87,16 +146,34 @@ export default function ChartHistory() {
               <input id="enddate" type="date"/>
             </label>
             <input type="submit" value="Draw Charts"/>
-          </form>
+          </form> */
+    return (
+        <>
+        <Head>
+          <title>Weather History - Mars Weather App</title>
+          <link rel="icon" href="iconfinder_planet_univearse_telestial_space_mars_1039574.ico" />
+        </Head>
+        <Base>
+          <h1>Weather History</h1>
+          <p>
+            This page allows you to chart and exmaine the Mars weather data for the last seven days. More specifically, it graphs temperature,
+            wind speed and direction, and pressure data for the last seven days.
+          </p>
           <div className="charts">
             <div>
-              <Bar data={temperature_data} />
+              <Bar data={temperature_high_data} options={chart_options} />
             </div>
             <div>
-              <Bar data={wind_data} />
+              <Bar data={temperature_low_data} options={chart_options} />
             </div>
             <div>
-              <Bar data={pressure_data} />
+              <Bar data={wind_direction_data} options={chart_options} />
+            </div>
+            <div>
+              <Bar data={wind_speed_data} options={chart_options} />
+            </div>
+            <div>
+              <Bar data={pressure_data} options={chart_options} />
             </div>
           </div>
           <style jsx>{`
@@ -132,7 +209,9 @@ export default function ChartHistory() {
               font-size: 1.3em;
             }
             .charts div {
-              margin-top: 40px;
+              padding: 10px;
+              max-width: 1440px;
+              margin: 30px auto;
             }
           `}
           </style>
