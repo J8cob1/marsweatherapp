@@ -42,10 +42,10 @@ export async function getStaticProps() {
       opportunitypic1: opportunityRoverPhotoQuery.photos.length > 0 ? opportunityRoverPhotoQuery.photos[0].img_src : "",
       spiritpic1: spiritRoverPhotoQuery.photos.length > 0 ? spiritRoverPhotoQuery.photos[0].img_src : "",
       curiositypic2: curiosityRoverPhotoQuery.photos.length > 2 ? curiosityRoverPhotoQuery.photos[2].img_src : "", // I skip to the third image because the first and second look almost the same
-      opportunitypic2: opportunityRoverPhotoQuery.photos.length > 2 ? opportunityRoverPhotoQuery.photos[2].img_src : "",
-      spiritpic2: spiritRoverPhotoQuery.photos.length > 2 ? spiritRoverPhotoQuery.photos[2].img_src : "",
-      apic_pic: APOTDQuery.hdurl ? APOTDQuery.hdurl : (APOTDQuery.url ? APOTDQuery.url : ""),
-      apic_copyright: APOTDQuery.hasOwnProperty("copyright") && (APOTDQuery.hdurl || APOTDQuery.url) ? APOTDQuery.copyright : "",
+      opportunitypic2: opportunityRoverPhotoQuery.photos.length > 2 ? opportunityRoverPhotoQuery.photos[2].img_src.replace('http://', 'https://') : "", // https://stackoverflow.com/questions/17277746/how-to-replace-http-with-https-via-javascript
+      spiritpic2: spiritRoverPhotoQuery.photos.length > 2 ? spiritRoverPhotoQuery.photos[2].img_src.replace('http://', 'https://') : "", // https://stackoverflow.com/questions/17277746/how-to-replace-http-with-https-via-javascript
+      apic_pic: APOTDQuery.hdurl ? APOTDQuery.hdurl.replace('http://', 'https://') : (APOTDQuery.url ? APOTDQuery.url.replace('http://', 'https://') : ""), // https://stackoverflow.com/questions/17277746/how-to-replace-http-with-https-via-javascript
+      apic_copyright: APOTDQuery.hasOwnProperty("copyright") && (APOTDQuery.hdurl || APOTDQuery.url) ? APOTDQuery.copyright : "", // https://stackoverflow.com/questions/17277746/how-to-replace-http-with-https-via-javascript
     }
   };
 }
