@@ -16,16 +16,35 @@ export async function getStaticProps() {
   let sol = weatherQuery.sol_keys[weatherQuery.sol_keys.length-1];
   let latestWeatherObj = weatherQuery[weatherQuery.sol_keys[weatherQuery.sol_keys.length-1]]; /**/
 
-  // Get picture URLs
+  // Get picture URLs and add them to an array
+  let images = [];
   let curiosityRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${sol}&api_key=${apiKey}`);
   let opportunityRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=${sol}&api_key=${apiKey}`);
   let spiritRoverPhotoQuery = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/spirit/photos?sol=${sol}&api_key=${apiKey}`);
   curiosityRoverPhotoQuery = await curiosityRoverPhotoQuery.json();
   opportunityRoverPhotoQuery = await opportunityRoverPhotoQuery.json();
   spiritRoverPhotoQuery = await spiritRoverPhotoQuery.json();
+  
+  if (curiosityRoverPhotoQuery.photos.length > 0)
+    images.push(curiosityRoverPhotoQuery.photos[0].img_src.replace('http://', 'https://')); // https://stackoverflow.com/questions/17277746/how-to-replace-http-with-https-via-javascript
+  if (curiosityRoverPhotoQuery.photos.length > 4)
+    images.push(curiosityRoverPhotoQuery.photos[4].img_src.replace('http://', 'https://')); // I jump to the fifth image to try to avoid getting images that looks the same 
 
+  if (opportunityRoverPhotoQuery.photos.length > 0)
+    images.push(opportunityRoverPhotoQuery.photos[0].img_src.replace('http://', 'https://'));
+  if (opportunityRoverPhotoQuery.photos.length > 4)
+    images.push(opportunityRoverPhotoQuery.photos[4].img_src.replace('http://', 'https://'));
+  
+  if (spiritRoverPhotoQuery.photos.length > 0)
+    images.push(spiritRoverPhotoQuery.photos[0].img_src.replace('http://', 'https://'));
+  if (spiritRoverPhotoQuery.photos.length > 4)
+    images.push(spiritRoverPhotoQuery.photos[4].img_src.replace('http://', 'https://')); 
+  
   // Get Astronomy Picture of the day. We will use it as a background image
-  let APOTDQuery = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`);
+  // https://api.nasa.gov/
+  let date = new Date();
+  date = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(); // https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd and https://stackoverflow.com/questions/8362952/javascript-output-current-datetime-in-yyyy-mm-dd-hhmsec-format
+  let APOTDQuery = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}&date=${date}&hd=True`);
   APOTDQuery = await APOTDQuery.json();
 
   return {
@@ -38,12 +57,7 @@ export async function getStaticProps() {
       windspeed: latestWeatherObj.HWS ? latestWeatherObj.HWS.av : "Unknown",
       pressure: latestWeatherObj.PRE ? latestWeatherObj.PRE.av : "Unknown",
       season: latestWeatherObj.Season ? String(latestWeatherObj.Season) : "Unknown",
-      curiositypic1: curiosityRoverPhotoQuery.photos.length > 0 ? curiosityRoverPhotoQuery.photos[0].img_src.replace('http://', 'https://') : "", // https://stackoverflow.com/questions/17277746/how-to-replace-http-with-https-via-javascript
-      opportunitypic1: opportunityRoverPhotoQuery.photos.length > 0 ? opportunityRoverPhotoQuery.photos[0].img_src.replace('http://', 'https://') : "",
-      spiritpic1: spiritRoverPhotoQuery.photos.length > 0 ? spiritRoverPhotoQuery.photos[0].img_src.replace('http://', 'https://') : "",
-      curiositypic2: curiosityRoverPhotoQuery.photos.length > 2 ? curiosityRoverPhotoQuery.photos[2].img_src.replace('http://', 'https://') : "", // I skip to the third image because the first and second look almost the same
-      opportunitypic2: opportunityRoverPhotoQuery.photos.length > 2 ? opportunityRoverPhotoQuery.photos[2].img_src.replace('http://', 'https://') : "", 
-      spiritpic2: spiritRoverPhotoQuery.photos.length > 2 ? spiritRoverPhotoQuery.photos[2].img_src.replace('http://', 'https://') : "", 
+      photos: images,
       apic_pic: APOTDQuery.hdurl ? APOTDQuery.hdurl.replace('http://', 'https://') : (APOTDQuery.url ? APOTDQuery.url.replace('http://', 'https://') : ""), 
       apic_copyright: APOTDQuery.hasOwnProperty("copyright") && (APOTDQuery.hdurl || APOTDQuery.url) ? APOTDQuery.copyright : "", 
     }
@@ -115,6 +129,14 @@ export default class Index extends React.Component {
     let minBoxHeight = 400;
     let minBoxWidth = 300;
 
+    // Get images ready
+    let photos = []
+    if (this.props.photos.length != 0) {
+      this.props.photos.forEach((photoURL, index) => { // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach and https://www.w3schools.com/jsref/jsref_forEach.asp
+        photos.push(<img className="rover-photo" alt="Picture from one of NASA's Mars rovers" src={photoURL} key={index}/>)
+      })
+    }
+
     // Remember accessibility overhall
     return (
       <>
@@ -153,17 +175,12 @@ export default class Index extends React.Component {
             </Box>
             <Box minwidth={minBoxWidth} minheight={minBoxHeight}>
               <h2>Season</h2>
-              <img class="weather-icon" alt="Season Icon" src={this.getSeasonIcon(this.props.season)} />
+              <img className="weather-icon" alt="Season Icon" src={this.getSeasonIcon(this.props.season)} />
               <p className="data-val">{this.props.season.charAt(0).toUpperCase() + this.props.season.slice(1)}</p> {/*https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript*/}
             </Box>
           </div>
           <div className="flex-row">
-            <img className="rover-photo" alt="Picture From NASA's Curiosity Rover" src={this.props.curiositypic1}/>
-            <img className="rover-photo" alt="Picture From NASA's Opportunity Rover" src={this.props.opportunitypic1}/>
-            <img className="rover-photo" alt="Picture From NASA's Spirit Rover" src={this.props.spiritpic1}/>
-            <img className="rover-photo" alt="Picture From NASA's Curiosity Rover" src={this.props.curiositypic2}/>
-            <img className="rover-photo" alt="Picture From NASA's Opportunity Rover" src={this.props.opportunitypic2}/>
-            <img className="rover-photo" alt="Picture From NASA's Spirit Rover" src={this.props.spiritpic2}/>
+            {photos}
           </div>
         </Base>
 
@@ -223,3 +240,7 @@ export default class Index extends React.Component {
     );
   }
 }
+
+// Some other sources/references
+// https://www.w3schools.com/tags/ref_httpmethods.asp
+// https://api.nasa.gov/
