@@ -16,5 +16,8 @@
     "react-dom": "16.13.1",
     "serialize-javascript": "^4.0.0",
     "node-fetch": ">=2.6.1"
+  },
+  "devDependencies": {
+    "node-fetch": ">=2.6.1"
   }
 }
