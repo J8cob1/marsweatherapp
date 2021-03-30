@@ -10,7 +10,7 @@ export default function Header() {
     <nav className="color-primary" role="navigation">
       <h1>Mars Weather App</h1>
       <ul> 
-        <li><a href="index">Current Weather</a></li>
+        <li><a href=".">Current Weather</a></li>
         <li><a href="7dayhistory">7 Day History</a></li>
         <li><a href="charthistory">Chart History</a></li>
         <li><a href="about">About</a></li>

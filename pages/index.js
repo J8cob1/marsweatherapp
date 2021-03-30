@@ -79,7 +79,7 @@ export default class Index extends React.Component {
       return "iconfinder_warm_1076727.svg";
     }
     else {
-      return "iconfinder_164_QuestionMark_183285.svg";
+      return "iconfinder_info_2460289.svg";
     }
   }
 
@@ -161,8 +161,8 @@ export default class Index extends React.Component {
             </Box>
             <Box minwidth={minBoxWidth} minheight={minBoxHeight}>
               <h2>Wind</h2>
-              <span className="data-val">{this.getWindDirectionTransform(this.props.winddirection) == null ? "Unkown" : ""}</span>
-              <img className="weather-icon wind-icon" alt="Wind Icon" src={this.getWindDirectionTransform(this.props.winddirection) != null ? "iconfinder_037_ArrowUp_183517.svg" : ""}/>
+              <span className="data-val">{this.getWindDirectionTransform(this.props.winddirection) == null ? "Unkown" : ""}<br/></span>
+              <img className="weather-icon wind-icon" alt="Wind Icon" src={this.getWindDirectionTransform(this.props.winddirection) != null ? "iconfinder_037_ArrowUp_183517.svg" : "iconfinder_info_2460289.svg"}/>
               <p className="unit">(Most Common Direction)</p>
               <p className="data-val">{this.props.windspeed} m/s</p>
               <p className="unit">(Avg. Hor. Wind Speed)</p>
