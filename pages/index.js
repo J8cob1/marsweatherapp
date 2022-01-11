@@ -1,3 +1,4 @@
+import React from 'react'
 import Head from 'next/head'
 import Base from '../components/base'
 import Box from '../components/box'

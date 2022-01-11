@@ -2,6 +2,7 @@
 // Will contain header and footer
 import Header from './header'
 import Footer from './footer'
+import React from 'react'
 import { Children } from 'react'
 
 // Gets Mars Weather Data From NASA
