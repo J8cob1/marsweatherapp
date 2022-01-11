@@ -1,7 +1,8 @@
-import Head from 'next/head'
-import Base from '../components/base'
+import Head from 'next/head';
+import Base from '../components/base';
+import { Chart as ChartJS } from 'chart.js/auto';
 import { Bar } from 'react-chartjs-2';
-import moment from 'moment-timezone'
+import moment from 'moment-timezone';
 
 // Gets Mars Weather Data From NASA
 export async function getStaticProps() {
