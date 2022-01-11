@@ -10,10 +10,10 @@ export default function Header() {
     <nav className="color-primary" role="navigation">
       <h1>Mars Weather App</h1>
       <ul> 
-        <li><a href=".">Current Weather</a></li>
-        <li><a href="7dayhistory">7 Day History</a></li>
-        <li><a href="charthistory">Chart History</a></li>
-        <li><a href="about">About</a></li>
+        <li><a href="/">Current Weather</a></li>
+        <li><a href="/7dayhistory">7 Day History</a></li>
+        <li><a href="/charthistory">Chart History</a></li>
+        <li><a href="/about">About</a></li>
       </ul>
     </nav>
 
@@ -40,6 +40,7 @@ export default function Header() {
         flex-wrap: wrap;
         justify-content: space-around;
         text-align: center;
+        list-style-type: none;
       }
       nav ul li {
         height: 20px;
